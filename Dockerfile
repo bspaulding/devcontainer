@@ -1,4 +1,4 @@
-ARG base
+ARG base=alpine
 FROM $base
 ARG base
 
