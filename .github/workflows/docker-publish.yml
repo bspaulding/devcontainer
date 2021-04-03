@@ -13,9 +13,6 @@ on:
   # Run tests for any PRs.
   pull_request:
 
-env:
-   IMAGE_NAME: base
-
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
@@ -45,23 +42,30 @@ jobs:
 
     strategy:
       matrix:
-        base: ['alpine', 'ubuntu']
+        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine']
 
     steps:
       - uses: actions/checkout@v2
-
-      - name: Build image
-        run: docker build . --file Dockerfile --build-arg base=${{ matrix.base }} --tag $IMAGE_NAME
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
         run: |
+          IMAGE_NAME=$(echo "${{ matrix.base }}" | cut -d':' -f1)
+          echo IMAGE_NAME=$IMAGE_NAME
+          IMAGE_TAG=$(echo "${{ matrix.base }}" | cut -d':' -f2)
+          echo IMAGE_TAG=$IMAGE_TAG
+
+          docker build . --file Dockerfile --build-arg base=${{ matrix.base }} --tag $IMAGE_NAME:$IMAGE_TAG
+
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
 
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+
+          docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
+          docker push $IMAGE_ID:$IMAGE_TAG
 
           # Strip git ref prefix from version
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
@@ -69,15 +73,11 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
 
-          # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
           VERSION=${{ matrix.base }}-$VERSION
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
-
-          docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          docker push $IMAGE_ID:$VERSION
 
           # retag alpine as latest
           [ "$VERSION" == "alpine-latest" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest || echo "skipped retagging because not alpine-latest"
