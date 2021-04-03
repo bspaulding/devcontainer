@@ -42,11 +42,11 @@ jobs:
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
-    
+
     strategy:
       matrix:
         base: ['alpine', 'ubuntu']
-    
+
     steps:
       - uses: actions/checkout@v2
 
@@ -71,13 +71,14 @@ jobs:
 
           # Use Docker `latest` tag convention
           [ "$VERSION" == "main" ] && VERSION=latest
-          VERSION=${{ matrix.base }}-$VERSION          
+          VERSION=${{ matrix.base }}-$VERSION
 
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
-          
+          docker push $IMAGE_ID:$VERSION
+
           # retag alpine as latest
           [ "$VERSION" == "main" && "${{ matrix.base }}" == "alpine" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest
-          docker push $IMAGE_ID:$VERSION
+          [ "$VERSION" == "main" && "${{ matrix.base }}" == "alpine" ] && docker push $IMAGE_ID:$VERSION
