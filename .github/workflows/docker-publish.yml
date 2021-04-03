@@ -52,17 +52,14 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_NAME=$(echo "${{ matrix.base }}" | cut -d':' -f1)
+          IMAGE_NAME=bspaulding-dev-$(echo "${{ matrix.base }}" | cut -d':' -f1)
           echo IMAGE_NAME=$IMAGE_NAME
           IMAGE_TAG=$(echo "${{ matrix.base }}" | cut -d':' -f2)
           echo IMAGE_TAG=$IMAGE_TAG
 
-          docker build . --file Dockerfile --build-arg base=${{ matrix.base }} --tag $IMAGE_NAME:$IMAGE_TAG
-
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
-
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          docker tag $IMAGE_NAME $IMAGE_ID:$IMAGE_TAG
+          docker build . --file Dockerfile --build-arg base=${{ matrix.base }} --tag $IMAGE_ID:$IMAGE_TAG
           docker push $IMAGE_ID:$IMAGE_TAG
