@@ -81,6 +81,6 @@ jobs:
 
           # retag alpine as latest
           [ "$VERSION" == "alpine-latest" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest || echo "skipped retagging because not alpine-latest"
-          [ "$VERSION" == "alpine-latest" ] && docker push $IMAGE_ID:$VERSION || echo "skipped pushing latest because not alpine-latest"
+          [ "$VERSION" == "alpine-latest" ] && docker push $IMAGE_ID:latest || echo "skipped pushing latest because not alpine-latest"
 
           echo "done!"
