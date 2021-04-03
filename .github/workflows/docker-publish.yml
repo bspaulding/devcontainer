@@ -80,5 +80,7 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
           # retag alpine as latest
-          [ "$VERSION" == "latest" ] && [ "${{ matrix.base }}" == "alpine" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest || echo "skipped retagging because not latest/alpine"
-          [ "$VERSION" == "latest" ] && [ "${{ matrix.base }}" == "alpine" ] && docker push $IMAGE_ID:$VERSION || echo "skipped retagging because not latest/alpine"
+          [ "$VERSION" == "alpine-latest" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest || echo "skipped retagging because not alpine-latest"
+          [ "$VERSION" == "alpine-latest" ] && docker push $IMAGE_ID:$VERSION || echo "skipped pushing latest because not alpine-latest"
+
+          echo "done!"
