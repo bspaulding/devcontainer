@@ -80,5 +80,5 @@ jobs:
           docker push $IMAGE_ID:$VERSION
 
           # retag alpine as latest
-          [ "$VERSION" == "main" && "${{ matrix.base }}" == "alpine" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest
-          [ "$VERSION" == "main" && "${{ matrix.base }}" == "alpine" ] && docker push $IMAGE_ID:$VERSION
+          [ "$VERSION" == "latest" && "${{ matrix.base }}" == "alpine" ] && docker tag $IMAGE_NAME $IMAGE_ID:latest
+          [ "$VERSION" == "latest" && "${{ matrix.base }}" == "alpine" ] && docker push $IMAGE_ID:$VERSION
