@@ -42,7 +42,7 @@ jobs:
 
     strategy:
       matrix:
-        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine', 'haskell:latest', 'node:15-alpine']
+        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine', 'haskell:latest', 'node:15-alpine', 'python:3-alpine', 'rust:alpine']
 
     steps:
       - uses: actions/checkout@v2
