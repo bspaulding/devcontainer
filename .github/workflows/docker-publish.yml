@@ -42,7 +42,7 @@ jobs:
             tag: 'latest'
             image-name: 'ubuntu'
           - base: 'clojure'
-            tag: 'openjdk-17-tools-deps-alpine',
+            tag: 'openjdk-17-tools-deps-alpine'
             image-name: 'clojure'
           - base: 'haskell'
             tag: 'latest'
