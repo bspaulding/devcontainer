@@ -51,7 +51,7 @@ jobs:
             tag: '15-alpine'
             image-name: 'node'
           - base: 'python'
-            tag': '3-alpine'
+            tag: '3-alpine'
             image-name: 'python'
           - base: 'rust'
             tag: 'alpine'
