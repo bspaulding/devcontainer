@@ -34,7 +34,7 @@ jobs:
 
     strategy:
       matrix:
-        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine', 'haskell:latest', 'node:15-alpine', 'python:3-alpine', 'rust:alpine', 'bspaulding-dev-base-scala:latest']
+        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine', 'haskell:latest', 'node:15-alpine', 'python:3-alpine', 'rust:alpine', 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest']
 
     steps:
       - uses: actions/checkout@v2
