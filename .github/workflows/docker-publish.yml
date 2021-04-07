@@ -35,19 +35,29 @@ jobs:
     strategy:
       matrix:
         include:
-          - base: 'alpine:latest'
+          - base: 'alpine'
+            tag: 'latest'
             image-name: 'alpine'
-          - base: 'ubuntu:latest'
+          - base: 'ubuntu'
+            tag: 'latest'
             image-name: 'ubuntu'
-          - base: 'clojure:openjdk-17-tools-deps-alpine',
+          - base: 'clojure'
+            tag: 'openjdk-17-tools-deps-alpine',
             image-name: 'clojure'
-          - base: 'haskell:latest'
+          - base: 'haskell'
+            tag: 'latest'
             image-name: 'haskell'
-          - base: 'node:15-alpine'
-            image-name: 'python:3-alpine'
-          - base: 'rust:alpine'
+          - base: 'node'
+            tag: '15-alpine'
+            image-name: 'node'
+          - base: 'python'
+            tag': '3-alpine'
+            image-name: 'python'
+          - base: 'rust'
+            tag: 'alpine'
             image-name: 'rust'
-          - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest'
+          - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala'
+            tag: 'latest'
             image-name: 'scala'
 
     steps:
@@ -60,12 +70,12 @@ jobs:
         run: |
           IMAGE_NAME=bspaulding-dev-${{ matrix.image-name }}
           echo IMAGE_NAME=$IMAGE_NAME
-          IMAGE_TAG=$(echo "${{ matrix.base }}" | cut -d':' -f2)
+          IMAGE_TAG=${{ matrix.tag }}
           echo IMAGE_TAG=$IMAGE_TAG
 
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           # Change all uppercase to lowercase
           IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
 
-          docker build . --file Dockerfile --build-arg base=${{ matrix.base }} --tag $IMAGE_ID:$IMAGE_TAG
+          docker build . --file Dockerfile --build-arg base=${{ matrix.base }}:${{ matrix.tag }} --tag $IMAGE_ID:$IMAGE_TAG
           docker push $IMAGE_ID:$IMAGE_TAG
