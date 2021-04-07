@@ -35,20 +35,20 @@ jobs:
     strategy:
       matrix:
         include:
-          - base: 'alpine:latest'
-            name: 'alpine'
-          - base: 'ubuntu:latest'
-            name: 'ubuntu'
-          - base: 'clojure:openjdk-17-tools-deps-alpine',
-            name: 'clojure'
-          - base: 'haskell:latest'
-            name: 'haskell'
-          - base: 'node:15-alpine'
-            name: 'python:3-alpine'
-          - base: 'rust:alpine'
-            name: 'rust'
-          - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest'
-            name: 'scala'
+          - base: "alpine:latest"
+            name: "alpine"
+          - base: "ubuntu:latest"
+            name: "ubuntu"
+          - base: "clojure:openjdk-17-tools-deps-alpine",
+            name: "clojure"
+          - base: "haskell:latest"
+            name: "haskell"
+          - base: "node:15-alpine"
+            name: "python:3-alpine"
+          - base: "rust:alpine"
+            name: "rust"
+          - base: "docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest"
+            name: "scala"
 
     steps:
       - uses: actions/checkout@v2
