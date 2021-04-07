@@ -34,7 +34,21 @@ jobs:
 
     strategy:
       matrix:
-        base: ['alpine:latest', 'ubuntu:latest', 'clojure:openjdk-17-tools-deps-alpine', 'haskell:latest', 'node:15-alpine', 'python:3-alpine', 'rust:alpine', 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest']
+        include:
+          - base: 'alpine:latest'
+            name: 'alpine'
+          - base: 'ubuntu:latest'
+            name: 'ubuntu'
+          - base: 'clojure:openjdk-17-tools-deps-alpine',
+            name: 'clojure'
+          - base: 'haskell:latest'
+            name: 'haskell'
+          - base: 'node:15-alpine'
+            name: 'python:3-alpine'
+          - base: 'rust:alpine'
+            name: 'rust'
+          - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala:latest'
+            name: 'scala'
 
     steps:
       - uses: actions/checkout@v2
@@ -44,7 +58,7 @@ jobs:
 
       - name: Push image
         run: |
-          IMAGE_NAME=bspaulding-dev-$(echo "${{ matrix.base }}" | cut -d':' -f1)
+          IMAGE_NAME=bspaulding-dev-${{ matrix.name }}
           echo IMAGE_NAME=$IMAGE_NAME
           IMAGE_TAG=$(echo "${{ matrix.base }}" | cut -d':' -f2)
           echo IMAGE_TAG=$IMAGE_TAG
