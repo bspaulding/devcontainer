@@ -59,7 +59,10 @@ jobs:
           - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-base-scala'
             tag: 'latest'
             image-name: 'scala'
-
+          - base: 'docker.pkg.github.com/bspaulding/devcontainer/bspaulding-dev-go-scala'
+            tag: 'latest'
+            image-name: 'go'
+            
     steps:
       - uses: actions/checkout@v2
 
