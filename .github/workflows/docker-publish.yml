@@ -62,6 +62,9 @@ jobs:
           - image-name: 'go'
             base: 'bspaulding/devcontainer-bspaulding-dev-base-go'
             tag: 'latest'
+          - image-name: 'ruby'
+            base: 'ruby'
+            tag: '3.0.3'
             
     steps:
       - uses: actions/checkout@v2
