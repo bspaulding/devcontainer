@@ -43,7 +43,7 @@ jobs:
             tag: 'latest'
           - image-name: 'clojure'
             base: 'clojure'
-            tag: 'openjdk-17-tools-deps-alpine'
+            tag: 'temurin-19-tools-deps-alpine'
           - image-name: 'haskell'
             base: 'haskell'
             tag: 'latest'
