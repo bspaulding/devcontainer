@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-PACKAGES="git tmux vim fish bash"
+PACKAGES="git tmux vim fish bash openssh-client"
 echo -n "Installing system packages..."
 if [ -n "$(command -v apk)" ]; then
 	apk add --no-cache $PACKAGES
