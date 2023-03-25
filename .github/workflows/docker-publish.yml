@@ -9,7 +9,7 @@ on:
     # Publish `v1.2.3` tags as releases.
     tags:
       - v*
-      
+
   workflow_dispatch:
 
 jobs:
@@ -55,13 +55,16 @@ jobs:
           - image-name: 'rust'
             base: 'rust'
             tag: 'alpine'
+          - image-name: 'rust'
+            base: 'rust'
+            tag: 'latest'
           - image-name: 'go'
             base: 'golang'
             tag: 'alpine'
           - image-name: 'ruby'
             base: 'ruby'
             tag: '3.0.3'
-            
+
     steps:
       - uses: actions/checkout@v2
 
